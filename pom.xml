@@ -1,0 +1,158 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.xstore.qa</groupId>
+    <artifactId>groovy-testng-demo</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>groovy-testng-demo</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.8</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.uncommons/reportng -->
+        <dependency>
+            <groupId>org.uncommons</groupId>
+            <artifactId>reportng</artifactId>
+            <version>1.1.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>2.4.10</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.6</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!--<sourceDirectory>src/main/java</sourceDirectory>-->
+        <!--<resources>-->
+            <!--<resource>-->
+                <!--<directory>src/main/resources</directory>-->
+                <!--<filtering>true</filtering>-->
+            <!--</resource>-->
+        <!--</resources>-->
+
+
+        <!--<testResources>-->
+            <!--<testResource>-->
+                <!--<directory>src/test/resources</directory>-->
+                <!--<filtering>true</filtering>-->
+            <!--</testResource>-->
+        <!--</testResources>-->
+
+        <!--<testOutputDirectory>src/target/test-output</testOutputDirectory>-->
+
+
+        <plugins>
+            <!-- ─( add java and groovy test source folder)─────── -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/test/java</source>
+                                <source>src/test/groovy</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <!-- ─( JAVA COMPILER )─────── -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <!-- ─( GROOVY COMPILER )─────── -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <compilerId>groovy-eclipse-compiler</compilerId>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-eclipse-compiler</artifactId>
+                        <version>2.7.0-01</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+
+            <!-- ─( UNIT TESTS )─────── -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.16</version>
+                <configuration>
+                    <forkMode>once</forkMode>
+                    <argLine>-Dfile.encoding=UTF-8</argLine>
+                    <includes>
+                        <include>**/*Test.groovy</include>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
+            </plugin>
+
+
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-surefire-report-plugin</artifactId>-->
+                <!--<version>2.20.1</version>-->
+                <!--<configuration>-->
+                    <!--<outputDirectory>${basedir}/target/test-output</outputDirectory>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-site-plugin</artifactId>-->
+                <!--<version>2.1</version>-->
+                <!--<configuration>-->
+                    <!--<outputDirectory>${basedir}/target/test-output</outputDirectory>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+
+
+        </plugins>
+    </build>
+
+</project>
